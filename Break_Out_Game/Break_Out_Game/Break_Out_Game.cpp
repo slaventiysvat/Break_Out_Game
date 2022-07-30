@@ -2,6 +2,7 @@
 //
 
 #include "Break_Out_Game.h"
+#include "olcConsoleGameEngine.h"
 
 using namespace std;
 

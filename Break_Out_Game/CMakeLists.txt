@@ -3,6 +3,10 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
+# force Unicode over Multi-byte
+
+add_definitions(-DUNICODE -D_UNICODE)
+
 project ("Break_Out_Game")
 
 # Включите подпроекты.

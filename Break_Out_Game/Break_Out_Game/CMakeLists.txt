@@ -3,7 +3,10 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
+# force Unicode over Multi-byte
+add_definitions(-DUNICODE -D_UNICODE)
+
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (Break_Out_Game "Break_Out_Game.cpp" "Break_Out_Game.h")
+add_executable (Break_Out_Game "Break_Out_Game.cpp" "Break_Out_Game.h" "olcConsoleGameEngine.h")
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
