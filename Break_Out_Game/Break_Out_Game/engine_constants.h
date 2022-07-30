@@ -1,4 +1,6 @@
 #pragma once
+#include "iostream"
+
 enum COLOUR
 {
 	FG_BLACK = 0x0000,
