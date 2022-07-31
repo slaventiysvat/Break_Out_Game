@@ -1,12 +1,13 @@
 #include "Breakout.h"
 #include "engine_constants.h"
-
+#include <string>
 
 Ball::Ball() {
 	float fAng = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX)) * PI * 2.0f;
 	fAng = 0.6f;
 	fBallDX = cosf(fAng);
 	fBallDY = sinf(fAng);
+
 }
 
  void Ball::BallMove(float fElapsedTime, int nBlock,int nWidth, int nHeight,float fBat, std::string &level) {
@@ -46,15 +47,18 @@ Ball::Ball() {
 	if (newcell != '.') {
 
 		if (newcell == '3') {
-			level.at(nCellNewY * nWidth + nCellNewX) = '2';
+			level.at((static_cast<long long int>(nCellNewY) * nWidth) + nCellNewX) = '2';
+			score_and_health.CurrentScore = score_and_health.CurrentScore + 15;
 		}
 
 		if (newcell == '2') {
-			level.at(nCellNewY * nWidth + nCellNewX) = '1';
+			level.at((static_cast<long long int>(nCellNewY) * nWidth) + nCellNewX) = '1';
+			score_and_health.CurrentScore = score_and_health.CurrentScore + 10;
 		}
 
 		if (newcell == '1') {
-			level.at(nCellNewY * nWidth + nCellNewX) = '.';
+			level.at((static_cast<long long int>(nCellNewY) * nWidth) + nCellNewX) = '.';
+			score_and_health.CurrentScore = score_and_health.CurrentScore + 5;
 		}
 
 		if (nCellNewX != nCellOldX) { fBallDX = fBallDX * (-1.0f); }
@@ -64,17 +68,18 @@ Ball::Ball() {
 
 
 	//Ball with Platform 
-	if (fBallY > (nHeight * nBlock - 2))
+	if (fBallY > (nHeight * nBlock - 3))
 	{
-		if ((fBallX != (fBat - nBatWidth)) && (fBallX > (fBat - nBatWidth))) {
+		if ((fBallX > (fBat - nBatWidth)) && (fBallX < (fBat + nBatWidth))) {
 
 			fBallDY = fBallDY * (-1.0f);
-			std::cout << "nice job" << std::endl;
+			//fBallDX = fBallDX * (-1.0f);
+			//std::cout << "nice job" << std::endl;
 		}
 		else {
 
-			//Dead, 
 			//Life minus
+			score_and_health.CurrenHealth = 1;
 			//Ball Respawn on Middle of the Screen
 			fBallX = (nWidth / 2.0f) * nBlock;
 			fBallY = (nHeight / 2.0f) * nBlock;
@@ -83,7 +88,7 @@ Ball::Ball() {
 			//fAng = 0.6f;
 			fBallDX = cosf(fAng);
 			fBallDY = sinf(fAng);
-			std::cout << "you deatch" << std::endl;
+			//std::cout << "you dead" << std::endl;
 		}
 	}
 
@@ -99,7 +104,7 @@ Ball::Ball() {
 //	//Ball::fOldY = new_state.ball_old_dy;
 //}
 
-bool Brekout::OnUserCreate() {
+bool Breakout::OnUserCreate() {
 	//	
 
 	//Ball Ball_Obj;
@@ -112,12 +117,32 @@ bool Brekout::OnUserCreate() {
 	return true;
 }
 
+bool Breakout::OnUserDestroy() {
+
+	//GameBaseClass::CloseHandler(CTRL_CLOSE_EVENT);
+
+	//Breakout::level = "################";
+	//		  level += "#...Level Was...#";
+	//		  level += "#...Finished....#";
+	//		  level += "#..Your Score...#";
+	//		  level += "#.."+ std::to_string(Score) +"..#";
+	//		  level += "#...11111111...#";
+	//		  level += "#...11111111...#";
+	//		  level += "#..............#";
+	//		  level += "#..............#";
+	//		  level += "#..............#";
+	//		  level += "#..............#";
+	//		  level += "#..............#";
+	//		  level += "#..............#";
+	//		  level += "#..............#";
+	//		  level += "................";
 
 
+	return true;
 
+}
 
-
-bool Brekout::OnUserUpdate(float fElapsedTime) {
+bool Breakout::OnUserUpdate(float fElapsedTime) {
 
 	Fill(0, 0, ScreenWidth(), ScreenHeight(), L' ');
 
@@ -127,26 +152,36 @@ bool Brekout::OnUserUpdate(float fElapsedTime) {
 	if (GetKey(VK_LEFT).bHeld) { fBat = fBat - fbatSpeed * fElapsedTime; }
 	if (GetKey(VK_RIGHT).bHeld) { fBat = fBat + fbatSpeed * fElapsedTime; }
 
+	//if ((fBat - nBatWidth) < nBlock) {
 
-	if ((fBat - nBatWidth) < nBlock) {
+	//	fBat = nBlock + nBatWidth;
 
-		fBat = nBlock + nBatWidth;
+	//}
 
-	}
+	//if ((fBat + nBatWidth) > (nWidth * nBlock)) {
 
-	if ((fBat + nBatWidth) > (nWidth * nBlock)) {
+	//	fBat = nWidth * nBlock - nBatWidth;
 
-		fBat = nWidth * nBlock - nBatWidth;
-
-	}
+	//}
 	//Ball Moving
 	Ball_Obj.BallMove(fElapsedTime, nBlock,nWidth,nHeight, fBat, level);
+
+	Health = Health - Ball_Obj.get_health();
+
+	Score = Ball_Obj.get_score();
+
+	//if (Health < 1)
+	//{
+	//	//CloseHandler(CTRL_CLOSE_EVENT);
+	//	OnUserDestroy();
+	//	return true;
+	//}
 
 	//Drawing Elements
 	// -------------------------------------------------------------------
 	//Draw Level;
-	DrawLevel(Brekout::level, Brekout::nHeight, Brekout::nWidth, Brekout::nBlock);
-	//DrawLevel(level_3, Brekout::nHeight, Brekout::nWidth, Brekout::nBlock);
+	DrawLevel(Breakout::level, Breakout::nHeight, Breakout::nWidth, Breakout::nBlock);
+	//DrawLevel(level_3, Breakout::nHeight, Breakout::nWidth, Breakout::nBlock);
 
 	//BallDrawing
 	FillCircle(Ball_Obj.get_fball_x(), Ball_Obj.get_fball_y(), 2.0f, PIXEL_SOLID, FG_BLUE);
@@ -157,9 +192,9 @@ bool Brekout::OnUserUpdate(float fElapsedTime) {
 	return true;
 }
 
-void  Brekout::DrawLevel(std::string level,const int nHeight, const int nWidth, const int nBlock) {
+void  Breakout::DrawLevel(std::string level,const int nHeight, const int nWidth, const int nBlock) {
 
-	//Brekout::Fill(x * nBlock, y * nBlock, (x + 1) * nBlock, (y + 1) * nBlock, PIXEL_SOLID, FG_WHITE);
+	//Breakout::Fill(x * nBlock, y * nBlock, (x + 1) * nBlock, (y + 1) * nBlock, PIXEL_SOLID, FG_WHITE);
 
 	for (int y = 0; y < nHeight; y++) {
 
