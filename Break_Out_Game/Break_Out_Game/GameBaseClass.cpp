@@ -488,8 +488,8 @@ GameBaseClass::GameBaseClass()
 					m_bAtomActive = false;
 
 				// Update Title & Present Screen Buffer
-				wchar_t s[256];
-				swprintf_s(s, 256, L"Breakout - %s - FPS: %3.2f - %d ", m_sAppName.c_str(), 1.0f / fElapsedTime, events);
+				wchar_t s[256*2];
+				swprintf_s(s, 256*2, L"Breakout - %s - FPS: %3.2f - %d", m_sAppName.c_str(), 1.0f / fElapsedTime, events);
 				SetConsoleTitle(s);
 				WriteConsoleOutput(m_hConsole, m_bufScreen, { (short)m_nScreenWidth, (short)m_nScreenHeight }, { 0,0 }, &m_rectWindow);
 			}
