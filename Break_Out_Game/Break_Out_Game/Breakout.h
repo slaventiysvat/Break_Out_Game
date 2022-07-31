@@ -1,4 +1,4 @@
-#include "olcConsoleGameEngine.h"
+#include "GameBaseClass.h"
 #ifndef BREAKOUT
 #define BREAKOUT
 
@@ -60,7 +60,7 @@ private:
 };
 
 
-class Brekout : public olcConsoleGameEngine {
+class Breakout : public GameBaseClass{
 
 public:
 	Ball Ball_Obj;
@@ -74,9 +74,9 @@ public:
 	float fbatSpeed = 45.0f;
 
 public:
-	Brekout() {};
-	Brekout(std::string input_level) : level{ input_level } { };
-	~Brekout() {};
+	Breakout() {};
+	Breakout(std::string input_level) : level{ input_level } { };
+	~Breakout() {};
 public:
 	void DrawLevel(std::string level, const int nHeight, const int nWidth, const int nBlock);
 	bool OnUserCreate();
@@ -85,8 +85,6 @@ private:
 	std::string level;
 	const float PI = 3.14159265359;
 };
-
-
 
 
 

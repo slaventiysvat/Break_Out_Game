@@ -99,7 +99,7 @@ Ball::Ball() {
 //	//Ball::fOldY = new_state.ball_old_dy;
 //}
 
-bool Brekout::OnUserCreate() {
+bool Breakout::OnUserCreate() {
 	//	
 
 	//Ball Ball_Obj;
@@ -113,11 +113,7 @@ bool Brekout::OnUserCreate() {
 }
 
 
-
-
-
-
-bool Brekout::OnUserUpdate(float fElapsedTime) {
+bool Breakout::OnUserUpdate(float fElapsedTime) {
 
 	Fill(0, 0, ScreenWidth(), ScreenHeight(), L' ');
 
@@ -145,8 +141,8 @@ bool Brekout::OnUserUpdate(float fElapsedTime) {
 	//Drawing Elements
 	// -------------------------------------------------------------------
 	//Draw Level;
-	DrawLevel(Brekout::level, Brekout::nHeight, Brekout::nWidth, Brekout::nBlock);
-	//DrawLevel(level_3, Brekout::nHeight, Brekout::nWidth, Brekout::nBlock);
+	DrawLevel(Breakout::level, Breakout::nHeight, Breakout::nWidth, Breakout::nBlock);
+	//DrawLevel(level_3, Breakout::nHeight, Breakout::nWidth, Breakout::nBlock);
 
 	//BallDrawing
 	FillCircle(Ball_Obj.get_fball_x(), Ball_Obj.get_fball_y(), 2.0f, PIXEL_SOLID, FG_BLUE);
@@ -157,9 +153,9 @@ bool Brekout::OnUserUpdate(float fElapsedTime) {
 	return true;
 }
 
-void  Brekout::DrawLevel(std::string level,const int nHeight, const int nWidth, const int nBlock) {
+void  Breakout::DrawLevel(std::string level,const int nHeight, const int nWidth, const int nBlock) {
 
-	//Brekout::Fill(x * nBlock, y * nBlock, (x + 1) * nBlock, (y + 1) * nBlock, PIXEL_SOLID, FG_WHITE);
+	//Breakout::Fill(x * nBlock, y * nBlock, (x + 1) * nBlock, (y + 1) * nBlock, PIXEL_SOLID, FG_WHITE);
 
 	for (int y = 0; y < nHeight; y++) {
 
